@@ -6,7 +6,7 @@ public class Sistema {
         System.out.println("Olá, bem vindo ao sistema do VOLTZ");
 
 
-        Scanner myScanner = new MyScanner(System.in);
+        Scanner myScanner = new Scanner(System.in);
         System.out.println("""
                 Escolha uma das Opções:
                 1 - Criar Conta
