@@ -22,6 +22,32 @@ public Usuario () {
 
 }
 
+//---GETTERS---
+public String getNomeUsuario() {
+    return usuarioNome;
+}
+
+public String getEmail() {
+    return email;
+}
+
+public String getSenha() {
+    return senha;
+}
+
+public String getSexo() {
+    return sexo;
+}
+
+public LocalDate getDataNascimento() {
+    return dataNascimento;
+}
+
+public double getSaldo() {
+    return saldo;
+}
+
+//---SETTERS---
 public void setId (int novoId) {
     id = novoId;
 }
@@ -45,6 +71,16 @@ public void setDataNascimento (LocalDate novaDataNascimento) {
 public void setSaldo (double novoSaldo) {
     saldo = novoSaldo;
 }
+
+public void setSexo (String novoSexo) {
+    sexo = novoSexo;
+}
+
+public boolean autenticarUsuario(String senhaInformada) {
+    return this.senha.equals(senhaInformada);
+}
+
+
 
 
 
