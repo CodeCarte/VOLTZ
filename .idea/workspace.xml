@@ -4,12 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="first-query-in-database">
+    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="Feature: Criacao de conta finalizada.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/classes/Criptomoeda.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ConexaoBanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ConexaoBanco.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Sessao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Sessao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Sistema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Sistema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Carteira.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Carteira.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ConexaoBanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Sessao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Sessao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Sistema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Sistema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Usuario.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +106,23 @@
       <option name="project" value="LOCAL" />
       <updated>1746295930097</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Feature: Criacao de conta finalizada.">
+      <option name="closed" value="true" />
+      <created>1746308442168</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746308442168</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Feature: Criacao de conta finalizada.">
+      <option name="closed" value="true" />
+      <created>1746308490355</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1746308490355</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -122,6 +140,8 @@
     <MESSAGE value="first-commit" />
     <MESSAGE value="database-connection-added" />
     <MESSAGE value="first-query-in-database" />
-    <option name="LAST_COMMIT_MESSAGE" value="first-query-in-database" />
+    <MESSAGE value="Feature: Criação de conta finalizada." />
+    <MESSAGE value="Feature: Criacao de conta finalizada." />
+    <option name="LAST_COMMIT_MESSAGE" value="Feature: Criacao de conta finalizada." />
   </component>
 </project>

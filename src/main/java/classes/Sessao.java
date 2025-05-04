@@ -1,3 +1,5 @@
+package classes;
+
 public class Sessao {
     public static Usuario usuarioAutenticado = null;
 
@@ -14,7 +16,7 @@ public class Sessao {
         if (!usuarioEncontrado.autenticarUsuario(senha)) {
             return "❌ Senha incorreta.";
         }
-        //Usuario foi encontrado no bd, autentique-o
+        //classes.Usuario foi encontrado no bd, autentique-o
         usuarioAutenticado = usuarioEncontrado;
         return "✅ Login bem-sucedido";
     }

@@ -1,3 +1,5 @@
+package classes;
+
 import java.sql.*;
 
 public class ConexaoBanco {
@@ -30,7 +32,7 @@ public class ConexaoBanco {
                     (?, ?, ?, ?, ?, ?)
                     """;
             PreparedStatement stmt = conexao.prepareStatement(sql);
-            //Define cada "?" com o valor do 'Objeto Usuario'
+            //Define cada "?" com o valor do 'Objeto classes.Usuario'
             stmt.setString(1, usuario.getNomeUsuario());
             stmt.setString(2, usuario.getEmail());
             stmt.setString(3, usuario.getSenha());
