@@ -20,6 +20,15 @@ public class Carteira {
     }
 
     public void adicionarCripto(Criptomoeda cripto, double quantidade) {
-
+        for (AlocacaoCripto alocacao : this.criptoAlocacoes) {
+            if (alocacao.getCriptoAtivo().getId() == cripto.getId()) {
+                alocacao.adicionarQuantidade(quantidade);
+                return;
+            }
+        }
+        AlocacaoCripto novaAlocacao = new AlocacaoCripto();
+        novaAlocacao.setCriptoAtivo(cripto);
+        novaAlocacao.setQuantidade(quantidade);
+        criptoAlocacoes.add(novaAlocacao);
     }
 }

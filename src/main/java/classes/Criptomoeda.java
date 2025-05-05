@@ -46,4 +46,7 @@ public class Criptomoeda implements Ativo {
         this.sigla = novaSigla;
     }
 
- }
+    public void setPrecoUnitario(double precoUnitario) {
+        this.precoUnitario = precoUnitario;
+    }
+}

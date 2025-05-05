@@ -4,10 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="Ver Saldo, Adicionar Saldo added.">
+    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="xxxx">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/AlocacaoCripto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/AlocacaoCripto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/AlocacaoInvestimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/AlocacaoInvestimento.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Carteira.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Carteira.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Criptomoeda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Criptomoeda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Sistema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Sistema.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/AlocacaoCripto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/AlocacaoCripto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/AlocacaoInvestimento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/AlocacaoInvestimento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/Carteira.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Carteira.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/ConexaoBanco.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/ConexaoBanco.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/Criptomoeda.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Criptomoeda.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/Sistema.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Sistema.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -161,7 +170,23 @@
       <option name="project" value="LOCAL" />
       <updated>1746468284974</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="xxxx">
+      <option name="closed" value="true" />
+      <created>1746469246607</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1746469246607</updated>
+    </task>
+    <task id="LOCAL-00012" summary="xxxx">
+      <option name="closed" value="true" />
+      <created>1746469253821</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1746469253821</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -183,6 +208,7 @@
     <MESSAGE value="Feature: Criacao de conta finalizada." />
     <MESSAGE value="xxx" />
     <MESSAGE value="Ver Saldo, Adicionar Saldo added." />
-    <option name="LAST_COMMIT_MESSAGE" value="Ver Saldo, Adicionar Saldo added." />
+    <MESSAGE value="xxxx" />
+    <option name="LAST_COMMIT_MESSAGE" value="xxxx" />
   </component>
 </project>

@@ -3,6 +3,7 @@ package classes;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class Sistema {
@@ -106,14 +107,16 @@ public class Sistema {
                         System.out.println("Bem vindo(a), " + Sessao.usuarioAutenticado.getNomeUsuario() + "!");
 
                         while (true) {
+                            System.out.println();
                             System.out.println("O que você deseja fazer?");
                             System.out.println("""
                                     1 - Adicionar Saldo
                                     2 - Ver Saldo
                                     3 - Comprar Criptomoeda
-                                    4 - Listar Criptomoedas
+                                    4 - Listar Criptomoedas Disponíveis
                                     5 - Ver minha Carteira
-                                    6 - Sair da Conta""");
+                                    6 - Investir com Cripto
+                                    7 - Sair da Conta""");
 
                             int opcoesSistema = myScanner.nextInt();
                             switch (opcoesSistema) {
@@ -125,7 +128,7 @@ public class Sistema {
 
                                     Usuario usuario = Sessao.usuarioAutenticado;
                                     usuario.adicionarSaldo(valorBRL);
-
+                                    ConexaoBanco.atualizarSaldoUsuario(usuario);
                                     System.out.println("✅ Saldo adicionado com sucesso!");
                                     System.out.println("Saldo atual: R$ " + usuario.getSaldo());
                                     break;
@@ -170,19 +173,32 @@ public class Sistema {
                                     ordem.setQuantidade(quantidade);
                                     ordem.setStatus(StatusOrdem.EXECUTADA);
                                     ordem.setDataHora(LocalDateTime.now());
+                                    ConexaoBanco.salvarOrdem(ordem);
 
-                                    //Criar e Registrar Transacao (Transacao):
+                                    //Registrar Transacao (Transacao):
                                     Transacao transacao = new Transacao();
                                     transacao.setOrdem(ordem);
                                     transacao.setUsuario(mesmoUsuario);
                                     transacao.setQuantidade(quantidade);
                                     transacao.setPrecoUnitario(precoUnitario);
                                     transacao.setDataHora(LocalDateTime.now());
+                                    ConexaoBanco.salvarTransacao(transacao);
 
                                     mesmoUsuario.adicionarSaldo(-precoTotal);
                                     mesmoUsuario.getCarteira().adicionarCripto(criptoSelecionada, quantidade);
 
+                                case 4:
+                                    List<Criptomoeda> criptos = ConexaoBanco.listarCriptomoedas();
 
+                                    if (criptos.isEmpty()) {
+                                        System.out.println("❌ Nenhuma criptomoeda disponível.");
+                                    } else {
+                                        System.out.println("Criptomoedas disponíveis: ");
+                                        for (Criptomoeda c : criptos) {
+                                            System.out.println("🔹 " + c.getNome() + " (" + c.getSigla() + ") - Preço Unitário: R$ " + c.getPrecoUnitario());
+                                        }
+                                    }
+                                    break;
                             }
                         }
                     }
@@ -200,3 +216,4 @@ public class Sistema {
         }
     }
 }
+
