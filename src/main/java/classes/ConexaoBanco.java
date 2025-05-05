@@ -1,21 +1,31 @@
 package classes;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 
 public class ConexaoBanco {
-    public static void main (String[] args) throws SQLException {
-        Connection conexao = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conexao = DriverManager.getConnection("jdbc:mysql://localhost/voltz", "root", "Rws45tuv32%");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Driver MySQL não encontrado.");
-        } catch (SQLException e) {
-            System.out.print("Ocorreu um erro ao acessar o banco: " + e.getMessage());
-        } finally {
-            if (conexao != null) {
-                conexao.close();
+
+    private static Connection abrirConexao() throws Exception {
+        Properties props = new Properties();
+        props.load(new FileInputStream("src/config.properties"));
+
+        String url = props.getProperty("db.url");
+        String user = props.getProperty("db.user");
+        String password = props.getProperty("db.password");
+
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection(url, user, password);
+    }
+
+    public static void main (String[] args) throws Exception {
+        try (Connection conexao = abrirConexao()) {
+            if (conexao != null && !conexao.isClosed()) {
+                System.out.println("Conexão com o banco de dados foi estabelecida com sucesso!");
             }
+        } catch (Exception e) {
+            System.out.println("Erro ao conectar ao banco: " + e.getMessage());
         }
     }
 
