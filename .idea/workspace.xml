@@ -4,20 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="xxxx">
+    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="ccc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/classes/AlocacaoCripto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/AlocacaoCripto.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/AlocacaoInvestimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/AlocacaoInvestimento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/Carteira.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Carteira.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Criptomoeda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Criptomoeda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Ordem.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Ordem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Sessao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Sessao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/Sistema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Sistema.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/classes/AlocacaoCripto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/AlocacaoCripto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Usuario.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/AlocacaoInvestimento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/AlocacaoInvestimento.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/Carteira.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Carteira.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/ConexaoBanco.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/ConexaoBanco.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/classes/Criptomoeda.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Criptomoeda.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/Ordem.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Ordem.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/Sessao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Sessao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/Sistema.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Sistema.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/Usuario.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Usuario.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +188,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746469253821</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="ccc">
+      <option name="closed" value="true" />
+      <created>1746474365404</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1746474365404</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -209,6 +219,7 @@
     <MESSAGE value="xxx" />
     <MESSAGE value="Ver Saldo, Adicionar Saldo added." />
     <MESSAGE value="xxxx" />
-    <option name="LAST_COMMIT_MESSAGE" value="xxxx" />
+    <MESSAGE value="ccc" />
+    <option name="LAST_COMMIT_MESSAGE" value="ccc" />
   </component>
 </project>

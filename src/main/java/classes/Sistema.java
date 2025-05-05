@@ -119,6 +119,7 @@ public class Sistema {
                                     7 - Sair da Conta""");
 
                             int opcoesSistema = myScanner.nextInt();
+                            myScanner.nextLine();
                             switch (opcoesSistema) {
 
                                 //Adicionar Saldo
@@ -150,19 +151,49 @@ public class Sistema {
                                         System.out.println("❌ Criptomoeda não encontrada.");
                                         break;
                                     }
-
-                                    System.out.println("Digite a quantidade que deseja comprar: ");
-                                    double quantidade = myScanner.nextDouble();
-                                    //Exemplo fixo: 1 BTC = R$100.000
                                     double precoUnitario = criptoSelecionada.getPrecoUnitario();
-                                    double precoTotal = quantidade * precoUnitario;
+
+                                    System.out.println("Digite quanto você deseja investir em reais (R$): ");
+                                    String valorStr = myScanner.nextLine().replace(",", ".");
+                                    double valorInvestido = -1;
+
+                                    try {
+                                        valorInvestido = Double.parseDouble(valorStr);
+                                        if (valorInvestido <= 0) {
+                                            System.out.println("❌ Valor inválido. Insira um valor maior que zero");
+                                            break;
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("Valor inválido. Use ponto ou vírgula corretamente.");
+                                        break;
+                                    }
 
                                     Usuario mesmoUsuario = Sessao.usuarioAutenticado;
 
-                                    if (mesmoUsuario.getSaldo() < precoTotal) {
-                                        System.out.println("❌ Saldo insuficiente. Você precisa de R$ " + precoTotal);
+                                    if (mesmoUsuario.getSaldo() < valorInvestido) {
+                                        System.out.println("❌ Saldo insuficiente. Seu saldo é de R$ " + mesmoUsuario.getSaldo());
                                         break;
                                     }
+
+                                    if (precoUnitario <= 0) {
+                                        System.out.println("Erro: O preço unitário da criptomoeda está inválido (R$ " + precoUnitario + ").");
+                                        break;
+                                    }
+
+                                    double quantidade = valorInvestido / precoUnitario;
+                                    System.out.printf("Você irá comprar aproximadamente %.8f %s. Confirmar? (S/N): ",
+                                            quantidade, siglaCripto);
+                                    String confirmar = myScanner.nextLine().trim();
+
+                                    if (!confirmar.equalsIgnoreCase("S")) {
+                                        System.out.println("Compra cancelada.");
+                                        break;
+                                    }
+
+                                    ConexaoBanco.salvarAlocacaoCripto(mesmoUsuario.getCarteira().getId(), criptoSelecionada.getId(), quantidade);
+                                    mesmoUsuario.removerSaldo(valorInvestido);
+                                    mesmoUsuario.getCarteira().adicionarCripto(criptoSelecionada, quantidade);
+                                    ConexaoBanco.atualizarSaldoUsuario(mesmoUsuario);
 
                                     //Registrar o Pedido de Compra (Ordem):
                                     Ordem ordem = new Ordem();
@@ -183,10 +214,9 @@ public class Sistema {
                                     transacao.setPrecoUnitario(precoUnitario);
                                     transacao.setDataHora(LocalDateTime.now());
                                     ConexaoBanco.salvarTransacao(transacao);
+                                    break;
 
-                                    mesmoUsuario.adicionarSaldo(-precoTotal);
-                                    mesmoUsuario.getCarteira().adicionarCripto(criptoSelecionada, quantidade);
-
+                                    //Listar Criptomoedas
                                 case 4:
                                     List<Criptomoeda> criptos = ConexaoBanco.listarCriptomoedas();
 
@@ -199,6 +229,24 @@ public class Sistema {
                                         }
                                     }
                                     break;
+
+                                case 5:
+                                    //Vou ter a carteira do usuario
+                                    Usuario mesmoUsuario3 = Sessao.usuarioAutenticado;
+                                    Carteira carteira = mesmoUsuario3.getCarteira();
+
+                                    if (carteira == null) {
+                                        System.out.println("Nenhuma carteira encontrada para este usuário");
+                                        break;
+                                    }
+
+                                    System.out.println("Carteira: ");
+                                    carteira.verCarteira();
+                                    break;
+                                    //Mostrar a Carteira do Usuário
+
+
+
                             }
                         }
                     }

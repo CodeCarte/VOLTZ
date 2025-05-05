@@ -10,7 +10,7 @@ public class Usuario {
     private String sexo;
     private LocalDate dataNascimento;
     private double saldo;
-    private Carteira carteira;
+    private Carteira carteira = new Carteira();
 
 public Usuario (String nomeUsuario, String emailUsuario, String senhaUsuario, String sexoUsuario, LocalDate dataNascimentoUsuario) {
     this.usuarioNome = nomeUsuario;
@@ -18,6 +18,7 @@ public Usuario (String nomeUsuario, String emailUsuario, String senhaUsuario, St
     this.senha = senhaUsuario;
     this.sexo = sexoUsuario;
     this.dataNascimento = dataNascimentoUsuario;
+    this.carteira = new Carteira();
 }
 
 public Usuario (String nomeUsuario, String senhaUsuario) {
@@ -92,7 +93,11 @@ public void setSexo (String novoSexo) {
     this.sexo = novoSexo;
 }
 
-public boolean autenticarUsuario(String senhaInformada) {
+    public void setCarteira(Carteira carteira) {
+        this.carteira = carteira;
+    }
+
+    public boolean autenticarUsuario(String senhaInformada) {
     return this.senha.equals(senhaInformada);
 }
 
@@ -103,6 +108,17 @@ public void adicionarSaldo(double valorBRL) {
         System.out.println("❌ Valor inválido. Só é possível adicionar valores positivos.");
     }
 }
+
+public void removerSaldo(double valorBRL) {
+    if (valorBRL > 0 && this.saldo >= valorBRL) {
+        this.saldo -= valorBRL;
+    } else {
+        System.out.println("Valor inválido para remoção");
+    }
+
+}
+
+
 }
 
 

@@ -1,7 +1,8 @@
 package classes;
 
 
-import com.mysql.cj.protocol.Resultset;
+
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 
 import java.io.FileInputStream;
 import java.sql.*;
@@ -61,14 +62,14 @@ public class ConexaoBanco {
         }
     }
 
-    public static void salvarOrdem(Ordem ordem) {
+    public static int salvarOrdem(Ordem ordem) {
         String sql = """
                     INSERT INTO ORDEM (id_usuario, tipo, quantidade, preco_unitario, status, data_hora, ativo_tipo, id_criptomoeda, id_investimento)\s
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                    \s""";
 
         try (Connection conexao = abrirConexao();
-             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+             PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setInt(1, ordem.getUsuario().getId());
             stmt.setString(2, ordem.getTipo().toString());
@@ -91,13 +92,21 @@ public class ConexaoBanco {
 
             int linhas = stmt.executeUpdate();
             if (linhas > 0) {
-                System.out.println("✅ Ordem registrada com sucesso!");
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int idGerado = generatedKeys.getInt(1);
+                        ordem.setId(idGerado);
+                        System.out.println("Ordem registrada com sucesso!");
+                        return idGerado;
+                    }
+                }
             } else {
                 System.out.println("❌ Falha ao salvar ordem");
             }
         } catch (Exception e) {
             System.out.println("Erro ao salvar ordem: " + e.getMessage());
         }
+        return -1;
     }
 
     public static void salvarTransacao(Transacao transacao) {
@@ -123,6 +132,21 @@ public class ConexaoBanco {
             }
         } catch (Exception e) {
             System.out.println("Erro ao salvar transação: " + e.getMessage());
+        }
+    }
+
+    public static void salvarAlocacaoCripto(int idCarteira, int idCripto, double quantidade) {
+        String sql = "INSERT INTO alocacao_cripto (id_carteira, id_criptomoeda, quantidade) VALUES (?, ?, ?) "
+                + "ON DUPLICATE KEY UPDATE quantidade = quantidade + VALUES(quantidade)";
+
+        try (Connection conexao = abrirConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, idCarteira);
+            stmt.setInt(2, idCripto);
+            stmt.setDouble(3, quantidade);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar alocação de criptomoeda: " + e.getMessage());
         }
     }
 
@@ -185,6 +209,7 @@ public class ConexaoBanco {
                     cripto.setId(rs.getInt("id"));
                     cripto.setNome(rs.getString("nome"));
                     cripto.setSigla(rs.getString("sigla"));
+                    cripto.setPrecoUnitario(rs.getDouble("preco_unitario"));
                 }
             }
         } catch (Exception e) {

@@ -49,6 +49,10 @@ public class Ordem {
     }
 
     //--SETTERS--
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setUsuario(Usuario novoUsuario) {
         this.usuario = novoUsuario;
     }
