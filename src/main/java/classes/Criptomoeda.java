@@ -1,9 +1,10 @@
 package classes;
 
-public class Criptomoeda {
+public class Criptomoeda implements Ativo {
     private int id;
     private  String sigla;
     private  String nome;
+    private double precoUnitario;
 
 
     public Criptomoeda(String criptoNome, String criptoSigla) {
@@ -22,6 +23,14 @@ public class Criptomoeda {
 
     public String getSigla() {
         return sigla;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public double getPrecoUnitario() {
+        return this.precoUnitario;
     }
 
     //---SETTERS---

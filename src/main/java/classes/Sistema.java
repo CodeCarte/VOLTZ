@@ -1,6 +1,7 @@
 package classes;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -108,10 +109,11 @@ public class Sistema {
                             System.out.println("O que você deseja fazer?");
                             System.out.println("""
                                     1 - Adicionar Saldo
-                                    2 - Comprar Criptomoeda
-                                    3 - Listar Criptomoedas
-                                    3 - Ver minha Carteira
-                                    4 - Sair da Conta""");
+                                    2 - Ver Saldo
+                                    3 - Comprar Criptomoeda
+                                    4 - Listar Criptomoedas
+                                    5 - Ver minha Carteira
+                                    6 - Sair da Conta""");
 
                             int opcoesSistema = myScanner.nextInt();
                             switch (opcoesSistema) {
@@ -128,8 +130,14 @@ public class Sistema {
                                     System.out.println("Saldo atual: R$ " + usuario.getSaldo());
                                     break;
 
-                                    //Comprar Criptomoeda com Saldo
+                                    //Ver Saldo
                                 case 2:
+                                    Usuario mesmoUsuarioo = Sessao.usuarioAutenticado;
+                                    System.out.println("O saldo atual é: " + mesmoUsuarioo.getSaldo() + "\n");
+                                    break;
+
+                                    //Comprar Criptomoeda com Saldo
+                                case 3:
                                     System.out.print("Digite a Sigla da Criptomoeda que deseja comprar (ex: BTC): ");
                                     String siglaCripto = myScanner.nextLine().toUpperCase();
 
@@ -143,7 +151,7 @@ public class Sistema {
                                     System.out.println("Digite a quantidade que deseja comprar: ");
                                     double quantidade = myScanner.nextDouble();
                                     //Exemplo fixo: 1 BTC = R$100.000
-                                    double precoUnitario = 533003.14;
+                                    double precoUnitario = criptoSelecionada.getPrecoUnitario();
                                     double precoTotal = quantidade * precoUnitario;
 
                                     Usuario mesmoUsuario = Sessao.usuarioAutenticado;
@@ -153,14 +161,26 @@ public class Sistema {
                                         break;
                                     }
 
-                                    //Registrar a Ordem:
+                                    //Registrar o Pedido de Compra (Ordem):
                                     Ordem ordem = new Ordem();
+                                    ordem.setUsuario(mesmoUsuario);
+                                    ordem.setAtivo(criptoSelecionada);
+                                    ordem.setTipo(TipoOrdem.COMPRA);
+                                    ordem.setPrecoUnitario(precoUnitario);
+                                    ordem.setQuantidade(quantidade);
+                                    ordem.setStatus(StatusOrdem.EXECUTADA);
+                                    ordem.setDataHora(LocalDateTime.now());
+
+                                    //Criar e Registrar Transacao (Transacao):
+                                    Transacao transacao = new Transacao();
+                                    transacao.setOrdem(ordem);
+                                    transacao.setUsuario(mesmoUsuario);
+                                    transacao.setQuantidade(quantidade);
+                                    transacao.setPrecoUnitario(precoUnitario);
+                                    transacao.setDataHora(LocalDateTime.now());
 
                                     mesmoUsuario.adicionarSaldo(-precoTotal);
                                     mesmoUsuario.getCarteira().adicionarCripto(criptoSelecionada, quantidade);
-
-
-
 
 
                             }

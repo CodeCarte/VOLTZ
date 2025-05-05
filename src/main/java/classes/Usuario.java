@@ -34,6 +34,10 @@ public String getNomeUsuario() {
     return this.usuarioNome;
 }
 
+public int getId() {
+    return this.id;
+}
+
 public String getEmail() {
     return this.email;
 }
@@ -93,27 +97,12 @@ public boolean autenticarUsuario(String senhaInformada) {
 }
 
 public void adicionarSaldo(double valorBRL) {
-    if (valor > 0) {
+    if (valorBRL > 0) {
         this.saldo += valorBRL;
     } else {
         System.out.println("❌ Valor inválido. Só é possível adicionar valores positivos.");
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 

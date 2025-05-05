@@ -27,7 +27,7 @@ public class ConexaoBanco {
             conexao = DriverManager.getConnection("jdbc:mysql://localhost/voltz", "root", "Rws45tuv32%");
 
             String sql = """
-                    INSERT INTO USUARIO (nomeUsuario, email, senha, data_nascimento, saldo, sexo)
+                    INSERT INTO USUARIO (nome_usuario, email, senha, data_nascimento, saldo, sexo)
                     VALUES
                     (?, ?, ?, ?, ?, ?)
                     """;
@@ -69,7 +69,7 @@ public class ConexaoBanco {
             Class.forName("com.mysql.cj.jdbc.Driver");
             conexao = DriverManager.getConnection("jdbc:mysql://localhost/voltz", "root", "Rws45tuv32%");
 
-            String sql = "SELECT * FROM USUARIO WHERE nomeUsuario = ?";
+            String sql = "SELECT * FROM USUARIO WHERE nome_usuario = ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
             stmt.setString(1, usuarioNome);
 
@@ -78,7 +78,7 @@ public class ConexaoBanco {
             if (rs.next()) {
                 usuario = new Usuario();
                 usuario.setId(rs.getInt("id"));
-                usuario.setNomeUsuario(rs.getString("nomeUsuario"));
+                usuario.setNomeUsuario(rs.getString("nome_usuario"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setSenha(rs.getString("senha"));
                 usuario.setDataNascimento(rs.getDate("data_nascimento").toLocalDate());
@@ -161,4 +161,99 @@ public class ConexaoBanco {
         }
         return cripto;
     }
+
+    public static void salvarOrdem(Ordem ordem) {
+        Connection conexao = null;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost/voltz", "root", "Rws45tuv32%");
+
+            String sql = """
+                    INSERT INTO ORDEM (id_usuario, tipo, quantidade, preco_unitario, status, data_hora, ativo_tipo, id_criptomoeda, id_investimento)\s
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                   \s""";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, ordem.getUsuario().getId());
+            stmt.setString(2, ordem.getTipo().toString());
+            stmt.setDouble(3, ordem.getQuantidade());
+            stmt.setDouble(4, ordem.getPrecoUnitario());
+            stmt.setString(5, ordem.getStatus().toString());
+            stmt.setTimestamp(6, Timestamp.valueOf(ordem.getDataHora()));
+
+            if (ordem.getAtivo() instanceof Criptomoeda) {
+                stmt.setString(7, "CRIPTO");
+                stmt.setInt(8, ((Criptomoeda) ordem.getAtivo()).getId());
+                stmt.setNull(9, Types.INTEGER);
+            }
+
+            else if (ordem.getAtivo() instanceof Investimento) {
+                stmt.setString(7, "INVEST");
+                stmt.setNull(8, Types.INTEGER);
+                stmt.setInt(9, ((Investimento) ordem.getAtivo()).getId());
+            }
+
+            else {
+                throw new IllegalArgumentException("Tipo de ativo desconhecido");
+            }
+
+            int linhas = stmt.executeUpdate();
+            if (linhas > 0) {
+                System.out.println("✅ Ordem registrada com sucesso!");
+            } else {
+                System.out.println("❌ Falha ao salvar ordem");
+            }
+
+            stmt.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar ordem: " + e.getMessage());
+        } finally {
+            try {
+                if (conexao != null) conexao.close();
+            } catch (Exception e) {
+                System.out.println("Erro ao fechar conexão.");
+            }
+        }
+    }
+
+    public static void salvarTransacao(Transacao transacao) {
+        Connection conexao = null;
+
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost/voltz", "root", "Rws45tuv32%");
+
+            String sql = """
+                    INSERT INTO TRANSACAO (id_ordem, id_usuario, quantidade_executada, preco_unitario, data_hora)\s
+                    VALUES (?, ?, ?, ?, ?)
+                   \s""";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, transacao.getOrdem().getId());
+            stmt.setInt(2, transacao.getUsuario().getId());
+            stmt.setDouble(3, transacao.getQuantidade());
+            stmt.setDouble(4, transacao.getPrecoUnitario());
+            stmt.setTimestamp(5, Timestamp.valueOf(transacao.getDataHora()));
+
+            int linhas = stmt.executeUpdate();
+            if (linhas > 0) {
+                System.out.println("✅ Ordem registrada com sucesso!");
+            } else {
+                System.out.println("❌ Falha ao salvar ordem");
+            }
+
+            stmt.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar transação: " + e.getMessage());
+        } finally {
+            try {
+                if (conexao != null) conexao.close();
+            } catch (Exception e) {
+                System.out.println("Erro ao fechar conexão.");
+            }
+        }
+    }
+
+
+
 }
