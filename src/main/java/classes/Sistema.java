@@ -134,7 +134,7 @@ public class Sistema {
                                     System.out.println("Saldo atual: R$ " + usuario.getSaldo());
                                     break;
 
-                                    //Ver Saldo
+                                    //Ver Saldott
                                 case 2:
                                     Usuario mesmoUsuarioo = Sessao.usuarioAutenticado;
                                     System.out.println("O saldo atual é: " + mesmoUsuarioo.getSaldo() + "\n");
