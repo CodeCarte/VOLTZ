@@ -125,14 +125,40 @@ public class ConexaoBanco {
             }
         }
         return existe;
-
-
     }
 
+    public static Criptomoeda buscarCriptomoedaPorSigla(String sigla) {
+        Connection conexao = null;
+        Criptomoeda cripto = null;
 
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conexao = DriverManager.getConnection("jdbc:mysql://localhost/voltz", "root", "Rws45tuv32%");
 
+            String sql = "SELECT * FROM CRIPTOMOEDA WHERE sigla = ?";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, sigla.toUpperCase());
+            ResultSet rs = stmt.executeQuery();
 
+            if (rs.next()) {
+                cripto = new Criptomoeda();
+                cripto.setId(rs.getInt("id"));
+                cripto.setNome(rs.getString("nome"));
+                cripto.setSigla(rs.getString("sigla"));
+            }
 
+            rs.close();
+            stmt.close();
 
-
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar criptomoeda: " + e.getMessage());
+        } finally {
+            try {
+                if (conexao != null) conexao.close();
+            } catch (Exception e) {
+                System.out.println("Erro ao fechar conexão.");
+            }
+        }
+        return cripto;
+    }
 }

@@ -20,67 +20,86 @@ public Usuario (String nomeUsuario, String emailUsuario, String senhaUsuario, St
     this.dataNascimento = dataNascimentoUsuario;
 }
 
+public Usuario (String nomeUsuario, String senhaUsuario) {
+    this.usuarioNome = nomeUsuario;
+    this.senha = senhaUsuario;
+}
+
 public Usuario () {
 
 }
 
 //---GETTERS---
 public String getNomeUsuario() {
-    return usuarioNome;
+    return this.usuarioNome;
 }
 
 public String getEmail() {
-    return email;
+    return this.email;
 }
 
 public String getSenha() {
-    return senha;
+    return this.senha;
 }
 
 public String getSexo() {
-    return sexo;
+    return this.sexo;
 }
 
 public LocalDate getDataNascimento() {
-    return dataNascimento;
+    return this.dataNascimento;
 }
 
 public double getSaldo() {
-    return saldo;
+    return this.saldo;
 }
+
+public Carteira getCarteira() {
+    return this.carteira;
+}
+
 
 //---SETTERS---
 public void setId (int novoId) {
-    id = novoId;
+    this.id = novoId;
 }
 
 public void setNomeUsuario (String novoNomeUsuario) {
-    usuarioNome = novoNomeUsuario;
+    this.usuarioNome = novoNomeUsuario;
 }
 
 public void setEmail (String novoEmail) {
-    email = novoEmail;
+    this.email = novoEmail;
 }
 
 public void setSenha (String novaSenha) {
-    senha = novaSenha;
+    this.senha = novaSenha;
 }
 
 public void setDataNascimento (LocalDate novaDataNascimento) {
-    dataNascimento = novaDataNascimento;
+    this.dataNascimento = novaDataNascimento;
 }
 
 public void setSaldo (double novoSaldo) {
-    saldo = novoSaldo;
+    this.saldo = novoSaldo;
 }
 
 public void setSexo (String novoSexo) {
-    sexo = novoSexo;
+    this.sexo = novoSexo;
 }
 
 public boolean autenticarUsuario(String senhaInformada) {
     return this.senha.equals(senhaInformada);
 }
+
+public void adicionarSaldo(double valorBRL) {
+    if (valor > 0) {
+        this.saldo += valorBRL;
+    } else {
+        System.out.println("❌ Valor inválido. Só é possível adicionar valores positivos.");
+    }
+}
+
 
 
 

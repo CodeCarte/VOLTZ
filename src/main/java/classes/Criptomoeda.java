@@ -1,13 +1,18 @@
 package classes;
 
 public class Criptomoeda {
-    private String sigla;
-    private String nome;
+    private int id;
+    private  String sigla;
+    private  String nome;
 
 
-    public Criptomoeda(String nome, String sigla) {
-        this.nome = nome;
-        this.sigla = sigla;
+    public Criptomoeda(String criptoNome, String criptoSigla) {
+        this.nome = criptoNome;
+        this.sigla = criptoSigla;
+    }
+
+    public Criptomoeda() {
+
     }
 
     //---GETTERS---
@@ -18,4 +23,18 @@ public class Criptomoeda {
     public String getSigla() {
         return sigla;
     }
+
+    //---SETTERS---
+    public void setId(int novoId) {
+        this.id = novoId;
+    }
+
+    public void setNome(String novoNome) {
+        this.nome = novoNome;
+    }
+
+    public void setSigla(String novaSigla) {
+        this.sigla = novaSigla;
+    }
+
  }
