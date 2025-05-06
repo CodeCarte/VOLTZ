@@ -84,6 +84,12 @@ public class Sistema {
                     try {
                         Usuario usuario = new Usuario(nomeUsuario, emailUsuario, senhaUsuario, sexoUsuario, dataNascimento);
                         ConexaoBanco.salvarUsuario(usuario);
+                        int idCarteira = ConexaoBanco.salvarCarteira(usuario.getId());
+                        Carteira carteira = new Carteira();
+                        carteira.setId(idCarteira);
+                        carteira.setUsuario(usuario);
+                        usuario.setCarteira(carteira);
+
                         System.out.println("A sua conta foi criada com Sucesso!");
                         break;
                     } catch (Exception e) {
@@ -104,6 +110,8 @@ public class Sistema {
                     System.out.println(respostaLogin);
 
                     if (Sessao.usuarioAutenticado != null) {
+                        Carteira carteira = ConexaoBanco.buscarCarteiraPorUsuarioId(Sessao.usuarioAutenticado.getId());
+                        Sessao.usuarioAutenticado.setCarteira(carteira);
                         System.out.println("Bem vindo(a), " + Sessao.usuarioAutenticado.getNomeUsuario() + "!");
 
                         while (true) {
@@ -134,7 +142,7 @@ public class Sistema {
                                     System.out.println("Saldo atual: R$ " + usuario.getSaldo());
                                     break;
 
-                                    //Ver Saldott
+                                    //Ver Saldo
                                 case 2:
                                     Usuario mesmoUsuarioo = Sessao.usuarioAutenticado;
                                     System.out.println("O saldo atual é: " + mesmoUsuarioo.getSaldo() + "\n");
@@ -155,7 +163,7 @@ public class Sistema {
 
                                     System.out.println("Digite quanto você deseja investir em reais (R$): ");
                                     String valorStr = myScanner.nextLine().replace(",", ".");
-                                    double valorInvestido = -1;
+                                    double valorInvestido;
 
                                     try {
                                         valorInvestido = Double.parseDouble(valorStr);
@@ -230,20 +238,23 @@ public class Sistema {
                                     }
                                     break;
 
+                                    //Ver Carteira
                                 case 5:
-                                    //Vou ter a carteira do usuario
                                     Usuario mesmoUsuario3 = Sessao.usuarioAutenticado;
-                                    Carteira carteira = mesmoUsuario3.getCarteira();
+                                    Carteira carteiraa = mesmoUsuario3.getCarteira();
 
-                                    if (carteira == null) {
+                                    if (carteiraa == null) {
                                         System.out.println("Nenhuma carteira encontrada para este usuário");
                                         break;
                                     }
 
                                     System.out.println("Carteira: ");
-                                    carteira.verCarteira();
+                                    carteiraa.verCarteira();
                                     break;
-                                    //Mostrar a Carteira do Usuário
+
+                                    //Investir com Cripto
+                                case 6:
+
 
 
 

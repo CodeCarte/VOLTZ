@@ -10,7 +10,7 @@ public class Usuario {
     private String sexo;
     private LocalDate dataNascimento;
     private double saldo;
-    private Carteira carteira = new Carteira();
+    private Carteira carteira;
 
 public Usuario (String nomeUsuario, String emailUsuario, String senhaUsuario, String sexoUsuario, LocalDate dataNascimentoUsuario) {
     this.usuarioNome = nomeUsuario;
@@ -18,7 +18,6 @@ public Usuario (String nomeUsuario, String emailUsuario, String senhaUsuario, St
     this.senha = senhaUsuario;
     this.sexo = sexoUsuario;
     this.dataNascimento = dataNascimentoUsuario;
-    this.carteira = new Carteira();
 }
 
 public Usuario (String nomeUsuario, String senhaUsuario) {

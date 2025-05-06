@@ -2,8 +2,6 @@ package classes;
 
 
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
-
 import java.io.FileInputStream;
 import java.sql.*;
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ public class ConexaoBanco {
                 """;
 
         try (Connection conexao = abrirConexao();
-             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+             PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, usuario.getNomeUsuario());
             stmt.setString(2, usuario.getEmail());
@@ -53,6 +51,13 @@ public class ConexaoBanco {
 
             int linhasAfetadas = stmt.executeUpdate();
             if (linhasAfetadas > 0) {
+
+                try (ResultSet rs = stmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int idGerado = rs.getInt(1);
+                        usuario.setId(idGerado);
+                    }
+                }
                 System.out.println("✅ Usuário cadastrado com sucesso!");
             } else {
                 System.out.println("❌ Falha ao cadastrar usuário");
@@ -150,6 +155,27 @@ public class ConexaoBanco {
         }
     }
 
+    public static int salvarCarteira(int idUsuario) {
+        String sql = "INSERT INTO carteira (id_usuario) VALUES (?)";
+
+
+        try (Connection conexao = abrirConexao();
+            PreparedStatement stmt = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setInt(1, idUsuario);
+            stmt.executeUpdate();
+
+            ResultSet rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar Carteira no banco: " + e.getMessage());
+        }
+        return -1;
+    }
+
     public static Usuario buscarUsuarioPorNome (String usuarioNome) {
         Usuario usuario = null;
         String sql = "SELECT * FROM USUARIO WHERE nome_usuario = ?";
@@ -176,6 +202,65 @@ public class ConexaoBanco {
             System.out.println("Erro ao buscar usuário: " + e.getMessage());
         }
         return usuario;
+    }
+
+    public static Carteira buscarCarteiraPorUsuarioId(int idUsuario) {
+        Carteira carteira = null;
+        String sql = "SELECT * FROM carteira WHERE id_usuario = ?";
+
+        try (Connection conexao = abrirConexao();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                carteira = new Carteira();
+                int idCarteira = rs.getInt("id");
+                carteira.setId(idCarteira);
+
+                List<AlocacaoCripto> criptoAlocacoes = listarAlocacoesCriptoPorCarteiraId(idCarteira);
+                carteira.getCriptoAlocacoes().addAll(criptoAlocacoes);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar carteira: " + e.getMessage());
+        }
+        return carteira;
+    }
+
+    public static List<AlocacaoCripto> listarAlocacoesCriptoPorCarteiraId(int idCarteira) {
+        List<AlocacaoCripto> alocacoes = new ArrayList<>();
+        String sql = """
+                SELECT ac.quantidade, c.id, c.nome, c.sigla, c.preco_unitario
+                FROM alocacao_cripto ac
+                JOIN criptomoeda c ON ac.id_criptomoeda = c.id
+                WHERE ac.id_carteira = ?""";
+
+        try (Connection conexao = abrirConexao();
+            PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, idCarteira);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Criptomoeda cripto = new Criptomoeda();
+                cripto.setId(rs.getInt("id"));
+                cripto.setNome(rs.getString("nome"));
+                cripto.setSigla(rs.getString("sigla"));
+                cripto.setPrecoUnitario(rs.getDouble("preco_unitario"));
+
+                AlocacaoCripto alocacao = new AlocacaoCripto();
+                alocacao.setCriptoAtivo(cripto);
+                alocacao.setQuantidade(rs.getDouble("quantidade"));
+
+                alocacoes.add(alocacao);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao listar alocações de cripto: " + e.getMessage());
+        }
+        return alocacoes;
     }
 
     public static boolean emailJaExiste(String email) {
