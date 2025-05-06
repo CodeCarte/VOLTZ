@@ -101,7 +101,7 @@ public class ConexaoBanco {
                     if (generatedKeys.next()) {
                         int idGerado = generatedKeys.getInt(1);
                         ordem.setId(idGerado);
-                        System.out.println("Ordem registrada com sucesso!");
+                        System.out.println("✅ Ordem registrada com sucesso!");
                         return idGerado;
                     }
                 }
@@ -152,6 +152,22 @@ public class ConexaoBanco {
             stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Erro ao salvar alocação de criptomoeda: " + e.getMessage());
+        }
+    }
+
+    public static void salvarAlocacaoInvestimento(int idCarteira, int idInvestimento, double quantidade) {
+        String sql = "INSERT INTO alocacao_investimento (id_carteira, id_investimento, quantidade) VALUES (?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE quantidade = quantidade + VALUES(quantidade)";
+
+        try (Connection conexao = abrirConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setInt(1, idCarteira);
+            stmt.setInt(2, idInvestimento);
+            stmt.setDouble(3, quantidade);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar alocação de investimento: " + e.getMessage());
         }
     }
 
@@ -227,6 +243,110 @@ public class ConexaoBanco {
             System.out.println("Erro ao buscar carteira: " + e.getMessage());
         }
         return carteira;
+    }
+
+    public static Carteira carregarCarteiraCompletaDoUsuario(int idUsuario) {
+        Carteira carteira = null;
+
+        String sqlCarteira = "SELECT * FROM carteira WHERE id_usuario = ?";
+        String sqlCriptos = """
+                SELECT ac.quantidade, c.id, c.nome, c.sigla, c.preco_unitario
+                FROM alocacao_cripto ac
+                JOIN criptomoeda c ON ac.id_criptomoeda = c.id
+                WHERE ac.id_carteira = ?
+                """;
+        String sqlInvestimentos = """
+                SELECT ai.quantidade, i.id, i.nome, i.sigla, i.tipo, i.preco_unitario
+                FROM alocacao_investimento ai
+                JOIN investimento i ON ai.id_investimento = i.id
+                WHERE ai.id_carteira = ?
+                """;
+
+        try (Connection conexao = abrirConexao()) {
+
+            try (PreparedStatement stmt1 = conexao.prepareStatement(sqlCarteira)) {
+                stmt1.setInt(1, idUsuario);
+                ResultSet rs1 = stmt1.executeQuery();
+
+                if (rs1.next()) {
+                    carteira = new Carteira();
+                    int idCarteira = rs1.getInt("id");
+                    carteira.setId(idCarteira);
+
+                    //Carregar Criptomoedas
+                    try (PreparedStatement stmt2 = conexao.prepareStatement(sqlCriptos)) {
+                        stmt2.setInt(1, idCarteira);
+                        ResultSet rs2 = stmt2.executeQuery();
+
+                        while (rs2.next()) {
+                            Criptomoeda cripto = new Criptomoeda();
+                            cripto.setId(rs2.getInt("id"));
+                            cripto.setNome(rs2.getString("nome"));
+                            cripto.setSigla(rs2.getString("sigla"));
+                            cripto.setPrecoUnitario(rs2.getDouble("preco_unitario"));
+
+                            AlocacaoCripto alocacao = new AlocacaoCripto();
+                            alocacao.setCriptoAtivo(cripto);
+                            alocacao.setQuantidade(rs2.getDouble("quantidade"));
+
+                            carteira.getCriptoAlocacoes().add(alocacao);
+                        }
+                        rs2.close();
+                    }
+                    //Carregar Investimentos
+                    try (PreparedStatement stmt3 = conexao.prepareStatement(sqlInvestimentos)) {
+                        stmt3.setInt(1, idCarteira);
+                        ResultSet rs3 = stmt3.executeQuery();
+
+                        while (rs3.next()) {
+                            Investimento inv = new Investimento();
+                            inv.setId(rs3.getInt("id"));
+                            inv.setNome(rs3.getString("nome"));
+                            inv.setSigla(rs3.getString("sigla"));
+                            inv.setTipo(TipoInvestimento.valueOf(rs3.getString("tipo")));
+                            inv.setPreco_unitario(rs3.getDouble("preco_unitario"));
+
+                            AlocacaoInvestimento alocInv = new AlocacaoInvestimento();
+                            alocInv.setInvestimento(inv);
+                            alocInv.setQuantidade(rs3.getDouble("quantidade"));
+
+                            carteira.getInvestimentoAlocacoes().add(alocInv);
+                        }
+                        rs3.close();
+                    }
+                }
+                rs1.close();
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao listar criptos do Usuário: " + e.getMessage());
+        }
+        return carteira;
+    }
+
+    public static List<Investimento> buscarInvestimentosPorTipo(String tipo) {
+        List<Investimento> investimentos = new ArrayList<>();
+        String sql = "SELECT * FROM investimento WHERE tipo = ?";
+
+        try (Connection conexao = abrirConexao();
+             PreparedStatement stmt = conexao.prepareStatement(sql)) {
+
+            stmt.setString(1, tipo.toUpperCase());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Investimento inv = new Investimento();
+                inv.setId(rs.getInt("id"));
+                inv.setNome(rs.getString("nome"));
+                inv.setSigla(rs.getString("sigla"));
+                inv.setTipo(TipoInvestimento.valueOf(rs.getString("tipo")));
+                inv.setPreco_unitario(rs.getDouble("preco_unitario"));
+                investimentos.add(inv);
+            }
+            rs.close();
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar investimentos por tipo: " + e.getMessage());
+        }
+        return investimentos;
     }
 
     public static List<AlocacaoCripto> listarAlocacoesCriptoPorCarteiraId(int idCarteira) {

@@ -11,6 +11,7 @@ public class AlocacaoInvestimento {
         return this.investimento;
     }
 
+    //--GETTERS--
     public double getQuantidade() {
         return this.quantidade;
     }
@@ -23,4 +24,20 @@ public class AlocacaoInvestimento {
         return this.id;
     }
 
+    //--SETTERS--
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setInvestimento(Investimento investimento) {
+        this.investimento = investimento;
+    }
+
+    public void setCarteira(Carteira carteira) {
+        this.carteira = carteira;
+    }
+
+    public void setQuantidade(double quantidade) {
+        this.quantidade = quantidade;
+    }
 }

@@ -25,8 +25,19 @@ public class AlocacaoCripto {
         this.quantidade = quantidade;
     }
 
-    public void adicionarQuantidade(double valor) {
-        this.quantidade += valor;
+    public void adicionarQuantidade(double quant) {
+        this.quantidade += quant;
+    }
+
+    public void removerQuantidade(double quant) {
+        if (quant <= 0) {
+            throw new IllegalArgumentException("A quantidade a remover deve ser positiva.");
+        }
+
+        if (this.quantidade < quant) {
+            throw new IllegalArgumentException("Quantidade insuficiente para remover.");
+        }
+        this.quantidade -= quant;
     }
 
 }

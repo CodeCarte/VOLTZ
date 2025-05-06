@@ -5,6 +5,7 @@ public class Investimento implements Ativo {
     private String sigla;
     private String nome;
     private TipoInvestimento tipo;
+    private double preco_unitario;
 
     //--GETTERS--
     public int getId() {
@@ -23,6 +24,10 @@ public class Investimento implements Ativo {
         return this.tipo;
     }
 
+    public double getPreco_unitario() {
+        return preco_unitario;
+    }
+
     //--SETTERS--
     public void setId(int id) {
         this.id = id;
@@ -38,5 +43,9 @@ public class Investimento implements Ativo {
 
     public void setTipo(TipoInvestimento tipo) {
         this.tipo = tipo;
+    }
+
+    public void setPreco_unitario(double preco_unitario) {
+        this.preco_unitario = preco_unitario;
     }
 }

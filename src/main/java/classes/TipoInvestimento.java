@@ -1,5 +1,5 @@
 package classes;
 
 public enum TipoInvestimento {
-    AÇÃO,
+    ACAO, FII, ETF
 }

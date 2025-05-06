@@ -9,8 +9,6 @@ import java.util.Scanner;
 public class Sistema {
     public static void main (String[] args) {
         System.out.println("Olá, bem vindo ao sistema do VOLTZ");
-
-
         Scanner myScanner = new Scanner(System.in);
 
         while (true) {
@@ -241,7 +239,8 @@ public class Sistema {
                                     //Ver Carteira
                                 case 5:
                                     Usuario mesmoUsuario3 = Sessao.usuarioAutenticado;
-                                    Carteira carteiraa = mesmoUsuario3.getCarteira();
+                                    Carteira carteiraa = ConexaoBanco.carregarCarteiraCompletaDoUsuario(mesmoUsuario3.getId());
+                                    mesmoUsuario3.setCarteira(carteiraa);
 
                                     if (carteiraa == null) {
                                         System.out.println("Nenhuma carteira encontrada para este usuário");
@@ -254,10 +253,145 @@ public class Sistema {
 
                                     //Investir com Cripto
                                 case 6:
+                                    Usuario mesmoUsuario4 = Sessao.usuarioAutenticado;
+                                    Carteira carteira2 = ConexaoBanco.carregarCarteiraCompletaDoUsuario(mesmoUsuario4.getId());
 
+                                    List<AlocacaoCripto> criptoAlocacoes = carteira2.getCriptoAlocacoes();
 
+                                    if (criptoAlocacoes.isEmpty()) {
+                                        System.out.println("❌ Você não nenhuma Criptomoeda para investir");
+                                        break;
+                                    }
 
+                                    System.out.println("Criptomoedas disponíveis: ");
+                                    for (int i = 0; i < criptoAlocacoes.size(); i++) {
+                                        AlocacaoCripto aloc = criptoAlocacoes.get(i);
+                                        System.out.printf("%d - %s (%s): %.8f unidades\n", i + 1,
+                                        aloc.getCriptoAtivo().getNome(),
+                                        aloc.getCriptoAtivo().getSigla(),
+                                        aloc.getQuantidade());
+                                    }
 
+                                    System.out.print("Digite o número da criptomoeda que deseja usar para investir: ");
+                                    int escolha = myScanner.nextInt();
+
+                                    if (escolha < 1 || escolha > criptoAlocacoes.size()) {
+                                        System.out.println("Opção Inválida.");
+                                        break;
+                                    }
+
+                                    AlocacaoCripto selecionada = criptoAlocacoes.get(escolha - 1);
+
+                                    System.out.printf("Você escolheu: %s (%s)\n",
+                                            selecionada.getCriptoAtivo().getNome(),
+                                            selecionada.getCriptoAtivo().getSigla());
+
+                                    System.out.println("Escolha a Modalidade do Investimento: (Ex: ACAO, FII, ETF)");
+                                    String tipoInvestimento = myScanner.next().toUpperCase();
+                                    myScanner.nextLine();
+
+                                    if (!tipoInvestimento.equalsIgnoreCase("ACAO")) {
+                                        System.out.println("Trabalho em progresso para a modalidade: " + tipoInvestimento);
+                                        break;
+                                    }
+
+                                    List<Investimento> investimentos = ConexaoBanco.buscarInvestimentosPorTipo("ACAO");
+
+                                    if (investimentos.isEmpty()) {
+                                        System.out.println("❌ Nenhuma Ação foi encontrada no banco de dados.");
+                                        break;
+                                    }
+
+                                    System.out.println("Escolha a Ação que deseja investir: ");
+                                    for (int i = 0; i < investimentos.size(); i++) {
+                                        Investimento inv = investimentos.get(i);
+                                        System.out.printf("%d - %s (%s): Preço: R$ %.2f\n", i + 1,
+                                                inv.getNome(),
+                                                inv.getSigla(),
+                                                inv.getPreco_unitario());
+                                    }
+                                    int escolhaAcao = myScanner.nextInt();
+                                    myScanner.nextLine();
+
+                                    if (escolhaAcao < 1 || escolhaAcao > investimentos.size()) {
+                                        System.out.println("Opção de Ação inválida!");
+                                        break;
+                                    }
+
+                                    Investimento investimentoSelecionado = investimentos.get(escolhaAcao - 1);
+
+                                    System.out.println("Digite quantas unidades da ação deseja comprar: ");
+                                    int quantidadeAcao = myScanner.nextInt();
+                                    myScanner.nextLine();
+
+                                    double totalInvestimentoBRL = investimentoSelecionado.getPreco_unitario() * quantidadeAcao;
+                                    double precoCriptoBRL = selecionada.getCriptoAtivo().getPrecoUnitario();
+                                    double quantidadeCriptoNecessaria = totalInvestimentoBRL / precoCriptoBRL;
+
+                                    System.out.printf("Deseja investir na Ação %s com a Criptomoeda %s?\n",
+                                            investimentoSelecionado.getSigla(), selecionada.getCriptoAtivo().getSigla());
+                                    System.out.printf("Serão usados %.8f %s (R$ %.2f) para comprar %d unidades de %s (R$ %.2f)\n",
+                                            quantidadeCriptoNecessaria,
+                                            selecionada.getCriptoAtivo().getSigla(),
+                                            totalInvestimentoBRL,
+                                            quantidadeAcao,
+                                            investimentoSelecionado.getSigla(),
+                                            investimentoSelecionado.getPreco_unitario());
+
+                                    System.out.print("Confirmar? (S/N): ");
+                                    String confirmarConversa = myScanner.nextLine().trim();
+
+                                    if (!confirmarConversa.equalsIgnoreCase("S")) {
+                                        System.out.println("Conversão cancelada.");
+                                        break;
+                                    }
+
+                                    if (selecionada.getQuantidade() < quantidadeCriptoNecessaria) {
+                                        System.out.println("❌ Você não possui cripto suficiente para realizar essa conversão.");
+                                        break;
+                                    }
+
+                                    //Remove Cripto
+                                    selecionada.removerQuantidade(quantidadeCriptoNecessaria);
+
+                                    //Adiciona Investimento na Carteira
+                                    AlocacaoInvestimento novaAlocacao = new AlocacaoInvestimento();
+                                    novaAlocacao.setInvestimento(investimentoSelecionado);
+                                    novaAlocacao.setQuantidade(quantidadeAcao);
+                                    carteira2.getInvestimentoAlocacoes().add(novaAlocacao);
+
+                                    //Atualizar Carteira no Banco
+                                    ConexaoBanco.salvarAlocacaoInvestimento(carteira2.getId(), investimentoSelecionado.getId(), quantidadeAcao);
+                                    ConexaoBanco.salvarAlocacaoCripto(carteira2.getId(), selecionada.getCriptoAtivo().getId(), -quantidadeCriptoNecessaria);
+
+                                    //Registrar Ordem
+                                    Ordem ordem2 = new Ordem();
+                                    ordem2.setUsuario(mesmoUsuario4);
+                                    ordem2.setTipo(TipoOrdem.COMPRA);
+                                    ordem2.setAtivo(investimentoSelecionado);
+                                    ordem2.setPrecoUnitario(investimentoSelecionado.getPreco_unitario());
+                                    ordem2.setStatus(StatusOrdem.EXECUTADA);
+                                    ordem2.setDataHora(LocalDateTime.now());
+                                    ConexaoBanco.salvarOrdem(ordem2);
+
+                                    //Registrar Transação
+                                    Transacao transacao2 = new Transacao();
+                                    transacao2.setUsuario(mesmoUsuario4);
+                                    transacao2.setOrdem(ordem2);
+                                    transacao2.setQuantidade(quantidadeAcao);
+                                    transacao2.setPrecoUnitario(investimentoSelecionado.getPreco_unitario());
+                                    transacao2.setDataHora(LocalDateTime.now());
+                                    ConexaoBanco.salvarTransacao(transacao2);
+
+                                    System.out.println("\n✅ Conversão efetuada com Sucesso!");
+                                    System.out.println("✅ " + quantidadeAcao + " unidades da Ação " + investimentoSelecionado.getSigla() + " foram adicionadas à sua carteira.");
+                                    System.out.println("✅ Quantidade equivalente da criptomoeda " + selecionada.getCriptoAtivo().getSigla() + " foi removida da carteira.");
+                                    break;
+
+                                case 7:
+                                    System.out.println("Saindo da conta...");
+                                    Sessao.usuarioAutenticado = null;
+                                    return;
                             }
                         }
                     }

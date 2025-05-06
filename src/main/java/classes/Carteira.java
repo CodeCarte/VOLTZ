@@ -64,11 +64,13 @@ public class Carteira {
         if (investimentoAlocacoes.isEmpty()) {
             System.out.println("Nenhum investimento alocado.");
         } else {
-            System.out.println("📈 Investimentos na carteira: ");
+            System.out.println("Investimentos na carteira: ");
             for (AlocacaoInvestimento alocacao : investimentoAlocacoes) {
-                System.out.printf("%s: R$ %.2f aplicados%n",
+                System.out.printf("🔹 %s (%s): %.2f unidades - Preço Unitário: R$ %.2f%n",
                         alocacao.getInvestimento().getNome(),
-                        alocacao.getQuantidade()
+                        alocacao.getInvestimento().getSigla(),
+                        alocacao.getQuantidade(),
+                        alocacao.getInvestimento().getPreco_unitario()
                 );
             }
         }
