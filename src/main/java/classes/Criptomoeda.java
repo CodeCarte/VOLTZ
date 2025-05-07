@@ -1,10 +1,6 @@
 package classes;
 
-public class Criptomoeda implements Ativo {
-    private int id;
-    private  String sigla;
-    private  String nome;
-    private double precoUnitario;
+public class Criptomoeda extends AtivoBase {
 
 
     public Criptomoeda(String criptoNome, String criptoSigla) {
@@ -16,37 +12,10 @@ public class Criptomoeda implements Ativo {
 
     }
 
-    //---GETTERS---
-    public String getNome() {
-        return nome;
+    @Override
+    public void mostrarResumo() {
+        System.out.printf("🪙 Cripto: %s (%s) - R$ %.2f%n", nome, sigla, precoUnitario);
     }
 
-    public String getSigla() {
-        return sigla;
-    }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public double getPrecoUnitario() {
-        return this.precoUnitario;
-    }
-
-    //---SETTERS---
-    public void setId(int novoId) {
-        this.id = novoId;
-    }
-
-    public void setNome(String novoNome) {
-        this.nome = novoNome;
-    }
-
-    public void setSigla(String novaSigla) {
-        this.sigla = novaSigla;
-    }
-
-    public void setPrecoUnitario(double precoUnitario) {
-        this.precoUnitario = precoUnitario;
-    }
 }

@@ -3,6 +3,7 @@ package classes;
 import java.time.LocalDateTime;
 
 public class Transacao {
+    private int id;
     private Ordem ordem;
     private Usuario usuario;
     private double quantidade;
@@ -11,6 +12,10 @@ public class Transacao {
 
 
     //--GETTERS--
+    public int getId() {
+        return this.id;
+    }
+
     public Ordem getOrdem() {
         return this.ordem;
     }
@@ -51,8 +56,6 @@ public class Transacao {
     public void setDataHora(LocalDateTime novaDataHora) {
         this.dataHora = novaDataHora;
     }
-
-
 }
 
 

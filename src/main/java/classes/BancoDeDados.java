@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class ConexaoBanco {
+public class BancoDeDados {
 
     private static Connection abrirConexao() throws Exception {
         Properties props = new Properties();
@@ -304,7 +304,7 @@ public class ConexaoBanco {
                             inv.setNome(rs3.getString("nome"));
                             inv.setSigla(rs3.getString("sigla"));
                             inv.setTipo(TipoInvestimento.valueOf(rs3.getString("tipo")));
-                            inv.setPreco_unitario(rs3.getDouble("preco_unitario"));
+                            inv.setPrecoUnitario(rs3.getDouble("preco_unitario"));
 
                             AlocacaoInvestimento alocInv = new AlocacaoInvestimento();
                             alocInv.setInvestimento(inv);
@@ -339,7 +339,7 @@ public class ConexaoBanco {
                 inv.setNome(rs.getString("nome"));
                 inv.setSigla(rs.getString("sigla"));
                 inv.setTipo(TipoInvestimento.valueOf(rs.getString("tipo")));
-                inv.setPreco_unitario(rs.getDouble("preco_unitario"));
+                inv.setPrecoUnitario(rs.getDouble("preco_unitario"));
                 investimentos.add(inv);
             }
             rs.close();

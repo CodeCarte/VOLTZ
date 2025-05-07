@@ -4,21 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="Carteira finished.">
+    <list default="true" id="928a5912-7fb3-474f-be05-4c7ba9ee4cc1" name="Changes" comment="70% Done">
+      <change afterPath="$PROJECT_DIR$/src/main/java/classes/AtivoBase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/classes/AlocacaoCripto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/AlocacaoCripto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/classes/AlocacaoInvestimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/AlocacaoInvestimento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/Carteira.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Carteira.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/ConexaoBanco.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/BancoDeDados.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Criptomoeda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Criptomoeda.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/Investimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Investimento.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/Sessao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Sessao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/Sistema.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Sistema.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/classes/TipoInvestimento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/TipoInvestimento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/classes/AlocacaoCripto.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/AlocacaoCripto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/classes/AlocacaoInvestimento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/AlocacaoInvestimento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/classes/Transacao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/classes/Transacao.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/Carteira.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Carteira.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/classes/ConexaoBanco.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/ConexaoBanco.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/ConexaoBanco.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/Criptomoeda.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Criptomoeda.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/Investimento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Investimento.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/classes/Sessao.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Sessao.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/Sistema.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/Sistema.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/classes/TipoInvestimento.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/classes/TipoInvestimento.class" afterDir="false" />
     </list>
@@ -31,8 +32,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -229,7 +230,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746549024656</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="70% Done">
+      <option name="closed" value="true" />
+      <created>1746567769846</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1746567769846</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -256,6 +265,7 @@
     <MESSAGE value="ccccccr" />
     <MESSAGE value="cccccc" />
     <MESSAGE value="Carteira finished." />
-    <option name="LAST_COMMIT_MESSAGE" value="Carteira finished." />
+    <MESSAGE value="70% Done" />
+    <option name="LAST_COMMIT_MESSAGE" value="70% Done" />
   </component>
 </project>

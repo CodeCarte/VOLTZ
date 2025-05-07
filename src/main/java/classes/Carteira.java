@@ -52,11 +52,8 @@ public class Carteira {
         } else {
             System.out.println("Criptomoedas na carteira: ");
             for (AlocacaoCripto alocacao : criptoAlocacoes) {
-                System.out.printf("🔸 %s (%s): %.8f unidades%n",
-                        alocacao.getCriptoAtivo().getNome(),
-                        alocacao.getCriptoAtivo().getSigla(),
-                        alocacao.getQuantidade()
-                );
+                exibirResumoDoAtivo(alocacao.getCriptoAtivo());
+                System.out.printf("🔸 Quantidade: %.8f unidades%n", alocacao.getQuantidade());
             }
         }
         System.out.println();
@@ -66,12 +63,8 @@ public class Carteira {
         } else {
             System.out.println("Investimentos na carteira: ");
             for (AlocacaoInvestimento alocacao : investimentoAlocacoes) {
-                System.out.printf("🔹 %s (%s): %.2f unidades - Preço Unitário: R$ %.2f%n",
-                        alocacao.getInvestimento().getNome(),
-                        alocacao.getInvestimento().getSigla(),
-                        alocacao.getQuantidade(),
-                        alocacao.getInvestimento().getPreco_unitario()
-                );
+                exibirResumoDoAtivo(alocacao.getInvestimento());
+                System.out.printf("🔹 Quantidade: %.2f unidades%n", alocacao.getQuantidade());
             }
         }
     }
@@ -87,5 +80,9 @@ public class Carteira {
         novaAlocacao.setCriptoAtivo(cripto);
         novaAlocacao.setQuantidade(quantidade);
         criptoAlocacoes.add(novaAlocacao);
+    }
+
+    public void exibirResumoDoAtivo(AtivoBase ativo) {
+        ativo.mostrarResumo();
     }
 }
